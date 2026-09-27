@@ -1,15 +1,23 @@
-<p>login works!</p>
-<form>
-    <input type="text" name="" id="">
-    <input type="password" name="" id="">
-    <button matButton="filled" type="submit">Login</button>
-</form>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus praesentium eaque repellat. Est, neque rem?
-    Autem omnis, temporibus, maxime pariatur possimus dicta voluptas natus impedit accusantium laudantium alias magni
-    iusto!</p>
-<!-- <div class="example-label">Filled</div> -->
-<!-- <div class="example-button-row"> -->
-<button matButton="filled">Basic</button>
-<!-- <button matButton="filled" disabled>Disabled</button>
+<section style="position: relative; justify-content: center; align-items: stretch; align-self: center;">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+        <input type="text" name="nombreUsuario" formControlName="user">
+        <!-- <mat-error *ngIf="user?.hasError()">
+            Error de prueba
+        </mat-error> -->
+
+        <input type="password" name="contraseña" formControlName="password">
+        <button matButton="filled" type="submit">Login</button>
+    </form>
+    <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus praesentium eaque repellat. Est, neque
+        rem?
+        Autem omnis, temporibus, maxime pariatur possimus dicta voluptas natus impedit accusantium laudantium alias
+        magni
+        iusto!</p> -->
+    <!-- <div class=" example-label">Filled</div> -->
+    <!-- <div class="example-button-row"> -->
+    <!-- <button matButton="filled">Basic</button> -->
+    <!-- <button matButton="filled" disabled>Disabled</button>
     <a matButton="filled" href="https://www.google.com/" target="_blank">Link</a>
 </div> -->
+</section>
