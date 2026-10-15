@@ -1,13 +1,14 @@
 {
-  "name": "primer-projecto-angular",
+  "name": "palabrink",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --host 0.0.0.0",
+    "start:share":"ng serve --allowed-hosts palabrink",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:primer-projecto-angular": "node dist/primer-projecto-angular/server/server.mjs"
+    "serve:ssr:palabrink": "node dist/palabrink/server/server.mjs"
   },
   "private": true,
   "packageManager": "npm@12.0.2",
@@ -24,6 +25,8 @@
     "@angular/ssr": "^21.2.24",
     "bootstrap": "^5.3.8",
     "express": "^5.1.0",
+    "firebase": "^12.19.0",
+    "ls": "^1.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
@@ -37,5 +40,17 @@
     "prettier": "^3.8.1",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"
-  }
+  },
+  "description": "This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.24.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ant-DeLaT/Palabrink-Angular.git"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Ant-DeLaT/Palabrink-Angular/issues"
+  },
+  "homepage": "https://github.com/Ant-DeLaT/Palabrink-Angular#readme"
 }

@@ -1,0 +1,17 @@
+.sidebar-container {
+    .sidebar-list {
+        list-style: none;
+
+        li {
+            margin: 1rem 0 1rem 0;
+
+            a {
+                text-decoration: none;
+            }
+
+            a:hover {
+                opacity: 0.8;
+            }
+        }
+    }
+}

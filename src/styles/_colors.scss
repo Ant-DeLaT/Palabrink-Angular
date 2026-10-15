@@ -1,0 +1,19 @@
+@use '@angular/material' as mat;
+
+$primary: rgb(248, 150, 112);
+$primary-dark: rgb(248, 150, 200);
+
+//Textos
+$text-primary: rgb(40,94,99);
+$text-primary-dark: rgb(21,48,51); 
+
+// $palette_info:(500: $primary,
+//   700: $primary-dark,
+//   contrast: (
+//     500: $text-primary, 
+//     700: $text-primary-dark, 
+//   ));
+// // 2. Creas una paleta básica inyectando tu color
+// $primary-palette: mat.define-palette(
+//   $palette_info
+// );

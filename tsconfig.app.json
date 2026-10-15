@@ -3,10 +3,23 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "./out-tsc/app",
+    
+    // Problema rutas
+    // https://github.com/microsoft/TypeScript/issues/62508
+    // Posible solución
+    // https://github.com/andrewbranch/ts5to6
+
+    //He ejecutado 
+    /*
+      npx @andrewbranch/ts5to6 --fixBaseUrl ./tsconfig.app.json
+      npx @andrewbranch/ts5to6 --fixRootDir ./tsconfig.app.json
+    */
+    //tsconfig ya no devuelve errores
+    "outDir": "src/app",
     "types": [
       "node"
-    ]
+    ],
+    "rootDir": "./src"
   },
   "include": [
     "src/**/*.ts"

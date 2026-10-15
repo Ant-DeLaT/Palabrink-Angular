@@ -1,10 +1,12 @@
-<!-- 
-<app-header style="height: 0.1vh;"></app-header>
-<router-outlet style="height: 80%;" />
-<app-footer style="height: 10%;"></app-footer> -->
+<app-header style="height: 10vh"></app-header>
 
-<app-header style="height: 10vh;"></app-header>
+<mat-drawer-container style="height: 100vh" [hasBackdrop]="true">
+  <mat-drawer mode="over" [opened]="sideBarService.sidebarOpen()">
+    <app-sidebar></app-sidebar
+  ></mat-drawer>
+  <mat-drawer-content>
+    <router-outlet style="height: 80vh" />
+  </mat-drawer-content>
+</mat-drawer-container>
 
-<router-outlet style="height: 80vh;" />
-
-<app-footer style="height: 10vh;"></app-footer>
+<app-footer style="height: 10vh"></app-footer>

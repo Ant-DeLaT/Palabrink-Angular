@@ -1,14 +1,20 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Header } from './core/header/header';
-import { Footer } from './core/footer/footer';
+import { Header } from './core/components/header/header.component';
+import { Footer } from './core/components/footer/footer.component';
+import { Sidebar } from './core/components/sidebar/sidebar.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { HeaderService } from './core/services/header.service';
+import { SideBarService } from './core/services/sidebar.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,Header,Footer],
+  imports: [RouterOutlet, Header, Footer, Sidebar, MatSidenavModule],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
-  protected readonly title = signal('primer-projecto-angular');
+  protected readonly title = signal('Palabrink');
+  public sideBarService = inject(SideBarService);
+  public headerService = inject(HeaderService);
 }

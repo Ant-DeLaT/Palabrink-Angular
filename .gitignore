@@ -1,4 +1,5 @@
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+NOTES
 
 # Compiled output
 /dist
@@ -39,8 +40,10 @@ testem.log
 /typings
 __screenshots__/
 .prettierrc
+
 # System files
 .DS_Store
 Thumbs.db
 
+/
 .env

@@ -1,0 +1,34 @@
+footer {
+    display: flex;
+    width: 100%;
+    /* background-color: black; */
+    background-color: rgb(10, 61, 20);
+    /* flex-direction:row;  */
+    justify-content: space-evenly;
+    padding: 1em;
+    /* align-items: center;  */
+    /* align-content: center;  */
+    /* align-self:center; */
+}
+
+.footer_elements {
+    width: 100%;
+    margin: 1em;
+    display: flex;
+    /* flex-direction: row; */
+    color: aliceblue;
+    justify-content: space-evenly;
+    /* Las clases internas funcionan sin scss (o quizás ya está implementado) */
+
+
+    a {
+        text-decoration: none;
+        color: chartreuse;
+    }
+
+    a:visited,
+    :hover,
+    :active {
+        color: rgb(176, 207, 195);
+    }
+}

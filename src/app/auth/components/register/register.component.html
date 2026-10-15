@@ -1,0 +1,76 @@
+<!-- <p>register works!</p> -->
+<section>
+  <form class="auth-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Nombre de usuario</mat-label>
+      <!-- Pendiente de añadir un watcher, el error no puede surgir si no ha sido tocado -->
+      <input id="registerUser" matInput type="text" formControlName="user" />
+      @let userErrors = formService.invalid(registerForm, 'user');
+      <mat-error>
+        @if (userErrors?.['required']) {
+        <span>Este campo no puede estar vacío.</span>
+        } @else if (userErrors?.['pattern']) {
+        <span>No se permiten símbolos en este campo.</span>
+        }
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Correo de usuario</mat-label>
+      <input matInput type="text" name="emailUsuario" formControlName="email" />
+      @let emailErrors = formService.invalid(registerForm, 'email');
+      <mat-error>
+        @if (emailErrors?.['required']) {
+        <span>Este campo no puede estar vacío.</span>
+        } @else if (emailErrors?.['email']) {
+        <span>No se reconoce como un email válido.</span>
+        }
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Introduzca contraseña</mat-label>
+      <input matInput type="password" formControlName="password" />
+
+      @let passwordErrors = formService.invalid(registerForm, 'password');
+      <mat-error>
+        @if (passwordErrors?.['required']) {
+        <span>Este campo no puede estar vacío.</span>
+        } @else if (passwordErrors?.['minlength']) {
+        <span>La contraseña no tiene longitud suficiente (6 mínimo).</span>
+        } @else if (passwordErrors?.['pattern']) {
+        <div>
+          <span>La contraseña no tiene uno o más de los siguientes requisitos:</span>
+          <ul>
+            <li>Una letra mayúscula</li>
+            <li>Una letra minúscula</li>
+            <li>Un símbolo</li>
+          </ul>
+        </div>
+        }
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Verifique contraseña</mat-label>
+      <input matInput type="password" formControlName="password_verify" />
+      @let password2Errors = formService.invalid(registerForm, 'password_verify');
+      <mat-error>
+        @if (password2Errors?.['required']) {
+        <span>Este campo no puede estar vacío.</span>
+        }
+      </mat-error>
+    </mat-form-field>
+    <mat-error>
+      @if (registerForm.errors?.['passwordsNotMatching']) {
+      <span>Las contraseñas no coinciden.</span>
+      }
+    </mat-error>
+    <!-- @if (!verifySamePasswd) {
+        <mat-error> Las contraseñas no son iguales </mat-error>
+        } -->
+    <button matButton="filled" [disabled]="registerForm.invalid" type="submit">Registrarse</button>
+    <small><a href="login">¿Ya has creado cuenta?</a></small>
+  </form>
+</section>
+
+<!-- <mat-error /*ngIf="control.errors?.['containsAtSymbol']" */>No metas @</mat-error> -->

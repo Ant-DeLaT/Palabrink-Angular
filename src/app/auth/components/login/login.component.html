@@ -1,0 +1,46 @@
+<section>
+  <div class="login-card">
+    <form class="auth-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field>
+        <mat-label>Nombre de usuario</mat-label>
+        <input id="loginUser" matInput type="text" formControlName="email" />
+
+        @if (formService.invalid(loginForm, 'email')) {
+        <mat-error> Error de prueba</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Contraseña</mat-label>
+        <input matInput type="password" id="loginPassword" formControlName="password" />
+      </mat-form-field>
+      <small><a href="reset-password">¿Has olvidado tu contraseña?</a></small>
+      <button matButton="filled" type="submit">Login</button>
+      <small><a href="register">¿No has creado una cuenta?</a></small>
+    </form>
+  </div>
+</section>
+
+<!-- 
+    Formularios Angular
+    https://material.angular.dev/components/form-field/overview 
+    Genera el error:
+    https://v21.angular.dev/errors/NG0100
+    -->
+
+<!-- 
+    <mat-form-field>
+        <mat-label>INPUTPRUEBA</mat-label>
+        <input matInput type="text">
+    </mat-form-field> -->
+<!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus praesentium eaque repellat. Est, neque
+        rem?
+        Autem omnis, temporibus, maxime pariatur possimus dicta voluptas natus impedit accusantium laudantium alias
+        magni
+        iusto!</p> -->
+<!-- <div class=" example-label">Filled</div> -->
+<!-- <div class="example-button-row"> -->
+<!-- <button matButton="filled">Basic</button> -->
+<!-- <button matButton="filled" disabled>Disabled</button>
+    <a matButton="filled" href="https://www.google.com/" target="_blank">Link</a>
+</div> -->
