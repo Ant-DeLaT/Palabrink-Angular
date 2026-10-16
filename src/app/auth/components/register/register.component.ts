@@ -6,8 +6,8 @@ import { MatButton } from '@angular/material/button';
 import { HeaderService } from '../../../core/services/header.service';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs, Firestore, addDoc } from 'firebase/firestore/lite';
-import { User, UserRole } from '../../interfaces/user.interface';
-import { FormService } from '../../services/password.service';
+import { PalabrinkUser, UserRole } from '../../interfaces/user.interface';
+import { FormService } from '../../services/form.service';
 import { FirebaseCnUsers } from '../../services/firebase-cn-users';
 
 @Component({
@@ -50,14 +50,14 @@ export class Register implements OnInit {
   ngOnInit(): void {
     this._titleService.title.set('Register');
 
-    const users = this._firebaseCnUsers.getUsers();
-    console.log('Usuarios obtenidos desde Firebase:', users);
+    // const users = this._firebaseCnUsers.getUsers();
+    // console.log('Usuarios obtenidos desde Firebase:', users);
   }
 
   onSubmit() {
     // const formValue = this.registerForm.value;
     const { user, password, email } = this.registerForm.value;
-    const userObject: User = {
+    const userObject: PalabrinkUser = {
       name: user,
       // Password e email son iguales a sus contrapartes en const; no hace falta indicarle el tipo
       password,
@@ -65,7 +65,7 @@ export class Register implements OnInit {
       role: UserRole.USER,
     };
     //TODO: Introducir password hasheado
-    this._firebaseCnUsers.postUser(userObject);
+    this._firebaseCnUsers.register(userObject);
   }
 
   // TODO:Pasar esto a un servicio de validación de formularios

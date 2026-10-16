@@ -1,14 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import { addDoc, collection, Firestore, getDocs, getFirestore } from 'firebase/firestore/lite';
-import { User } from '../interfaces/user.interface';
+// import { User } from '../interfaces/user.interface';
 import { environment } from '../../../environments/environment';
 import {
   getAuth,
   Auth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  User,
+  updateProfile,
 } from 'firebase/auth';
+import { PalabrinkUser } from '../interfaces/user.interface';
 
 @Injectable()
 export class FirebaseCnUsers {
@@ -25,58 +29,35 @@ export class FirebaseCnUsers {
   Si no lo has hecho, haz clic en el botón circular con el icono `` (Web) para registrar una. Ponle un nombre y guarda.
    */
 
-  private _db: Firestore;
+  // private _db: Firestore;
   private _auth: Auth;
+
+  public selectedUser = signal<User | null>(null);
 
   constructor() {
     const app = initializeApp(environment.firebase);
-    this._db = getFirestore(app);
     this._auth = getAuth(app);
+
+    onAuthStateChanged(this._auth, (user) => {
+      this.selectedUser.set(user);
+    });
   }
 
-  public async getUsers() {
-    //collection=>tabla
-    const usersCol = collection(this._db, 'users');
+  async register({ email, password, name }: PalabrinkUser) {
+    const credential = await createUserWithEmailAndPassword(this._auth, email, password);
+    console.log({ credential });
 
-    const usersSnapshot = await getDocs(usersCol);
-    const usersList = usersSnapshot.docs.map((doc) => doc.data());
-    return usersList;
+    await updateProfile(credential.user, {
+      displayName: name,
+      photoURL:
+        'https://cdn.agenciasinc.es/var/ezwebin_site/storage/images/_aliases/img_1col/en-exclusiva/programados/mi-gato-tiene-genes-de-leopardo/5668482-1-esl-MX/Mi-gato-tiene-genes-de-leopardo.jpg',
+    });
+
+    return credential.user;
   }
 
-  async postUser(formUser: User) {
-    createUserWithEmailAndPassword(this._auth, formUser.email, formUser.password)
-      .then((userCredential) => {
-        const firebaseUser = userCredential.user;
-
-        // firebaseUser.displayName = formUser.name; // Asignar el email como displayName
-        console.log('Token:', formUser);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error('Error al crear el usuario:', errorCode, errorMessage);
-      });
-
-    // try {
-    //   const usersTable = collection(this._db, 'users');
-
-    //   const docRef = await addDoc(usersTable, user);
-
-    //   console.log('Usuario creado correctamente con el ID:', docRef.id);
-    // } catch (error) {
-    //   console.error('Error al insertar el usuario:', error);
-    // }
-  }
-
-  public async login(email: string, password: string) {
-    //TODO: Posible upgrade
-    try {
-      const credenciales = await signInWithEmailAndPassword(this._auth, email, password);
-      console.log('Login exitoso:', credenciales.user);
-      return credenciales.user;
-    } catch (error) {
-      console.error('Error de autenticación:', error);
-      throw error; // Lanza el error para capturarlo en el componente y mostrarlo en el formulario
-    }
+  public async login({ email, password }: PalabrinkUser) {
+    const credencial = await signInWithEmailAndPassword(this._auth, email, password);
+    return credencial.user;
   }
 }

@@ -4,8 +4,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HeaderService } from '../../../core/services/header.service';
-import { FormService } from '../../services/password.service';
+import { FormService } from '../../services/form.service';
 import { FirebaseCnUsers } from '../../services/firebase-cn-users';
+import { PalabrinkUser } from '../../interfaces/user.interface';
 
 @Component({
   selector: 'app-login',
@@ -34,8 +35,7 @@ export class Login implements OnInit {
 
   onSubmit() {
     console.log(this.loginForm.value);
-    const { email, password } = this.loginForm.value;
-    this._firebaseCnUsers.login(email, password);
-    // console.log(this._firebaseCnUsers.login(user, password));
+    const user: PalabrinkUser = this.loginForm.value;
+    this._firebaseCnUsers.login(user);
   }
 }
