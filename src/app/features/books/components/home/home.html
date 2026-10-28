@@ -1,1 +1,7 @@
-<p>home works!</p>
+<section>
+  @for (book of books; track book.id) {
+    <app-book-card class="col-12 col-md-3" [book]="book"> </app-book-card>
+  } @empty {
+    <p>No hay libros registrados</p>
+  }
+</section>

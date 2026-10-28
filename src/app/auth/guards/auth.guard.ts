@@ -1,8 +1,11 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { FirebaseCnUsers } from '../services/firebase-cn-users';
 
 export const authGuard: CanActivateFn = () => {
+    inject(FirebaseCnUsers);
+
     const router = inject(Router);
     const auth = getAuth();
 

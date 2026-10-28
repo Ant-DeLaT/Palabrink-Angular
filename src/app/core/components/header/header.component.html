@@ -1,15 +1,28 @@
 <header>
-  <!-- <mat-drawer-container class="example-container">
-        <mat-drawer mode="side" opened>Drawer content</mat-drawer>
-        <mat-drawer-content>Main content</mat-drawer-content>
-    </mat-drawer-container> -->
-  <!-- <span class="material-symbols-outlined">
-        me    </span> -->
-
-  <img class="menu_icon" src="images/palabrink-imagen-rellena.png" alt="LogoPalabrink"
-    (click)="sideBarService.toggleSideBar()" />
+  <img
+    class="menu_icon"
+    src="images/palabrink-imagen-rellena.png"
+    alt="LogoPalabrink"
+    (click)="sideBarService.toggleSideBar()"
+  />
 
   <h1 class="title">{{ titleService.title() }}</h1>
   <!-- IconoPerfil.ico -->
-  <a class="profile_btn" href="#"><img src="images/IconoPerfilXS.png" alt="Perfil" /></a>
+
+  <button matButton [matMenuTriggerFor]="menu" class="profile_btn">
+    <img [src]="selectedUserImage()" alt="Perfil" />
+  </button>
+  <mat-menu #menu="matMenu">
+    @if (firebaseCnUsers.selectedUser()) {
+      <button mat-menu-item href="profile">
+        Hola, {{ firebaseCnUsers.selectedUser()!.displayName }}
+      </button>
+      <button mat-menu-item (click)="firebaseCnUsers.logout()">Logout</button>
+    } @else {
+      <p>No estás conectado</p>
+      <button mat-menu-item href="login">Login</button>
+    }
+  </mat-menu>
+
+  <!-- <a class="profile_btn" href="#"><img src="images/IconoPerfilXS.png" alt="Perfil" /></a> -->
 </header>

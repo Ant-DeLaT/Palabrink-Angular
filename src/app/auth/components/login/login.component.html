@@ -1,24 +1,31 @@
 <section>
-  <div class="login-card">
-    <form class="auth-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <mat-form-field>
-        <mat-label>Nombre de usuario</mat-label>
-        <input id="loginUser" matInput type="text" formControlName="email" />
+  <!-- <div class="login-card"> -->
+  <form class="auth-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Correo electrónico</mat-label>
+      <input id="loginUser" matInput type="text" formControlName="email" />
 
-        @if (formService.invalid(loginForm, 'email')) {
-        <mat-error> Error de prueba</mat-error>
-        }
-      </mat-form-field>
+      @if (formService.invalid(loginForm, 'email')) {
+      <mat-error> No es un correo válido</mat-error>
+      }
+    </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>Contraseña</mat-label>
-        <input matInput type="password" id="loginPassword" formControlName="password" />
-      </mat-form-field>
-      <small><a href="reset-password">¿Has olvidado tu contraseña?</a></small>
-      <button matButton="filled" type="submit">Login</button>
-      <small><a href="register">¿No has creado una cuenta?</a></small>
-    </form>
-  </div>
+    <mat-form-field>
+      <mat-label>Contraseña</mat-label>
+      <input matInput [type]="isPasswordHidden() ? 'password' : 'text'" id="loginPassword" formControlName="password" />
+      <button mat-icon-button matSuffix type="button" [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="isPasswordHidden()" (click)="hidePassword()">
+        <mat-icon>{{ isPasswordHidden() ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+      @if (formService.invalid(loginForm, 'password')) {
+      <mat-error> La contraseña tiene menos de 6 caracteres</mat-error>
+      }
+    </mat-form-field>
+    <small><a href="reset-password">¿Has olvidado tu contraseña?</a></small>
+    <button matButton="filled" [disabled]="loginForm.invalid" type="submit">Login</button>
+    <small><a href="register" class="centered">¿No has creado una cuenta?</a></small>
+  </form>
+  <!-- </div> -->
 </section>
 
 <!-- 

@@ -1,25 +1,43 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatError, MatFormField, MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
-import { MatButton } from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { HeaderService } from '../../../core/services/header.service';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs, Firestore, addDoc } from 'firebase/firestore/lite';
 import { PalabrinkUser, UserRole } from '../../interfaces/user.interface';
 import { FormService } from '../../services/form.service';
 import { FirebaseCnUsers } from '../../services/firebase-cn-users';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-register',
-  providers: [FormService, FirebaseCnUsers],
-  imports: [MatError, ReactiveFormsModule, CommonModule, MatFormField, MatInputModule, MatButton],
+  providers: [FormService],
+  imports: [
+    MatError,
+    ReactiveFormsModule,
+    CommonModule,
+    MatFormField,
+    MatInputModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatIconModule,
+  ],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css',
+  styleUrl: './register.component.scss',
 })
 export class Register implements OnInit {
+  //Propiedades de la clase
+  public isPasswordHidden = signal(true);
+  public isVerifyHidden = signal(true);
   public registerForm: FormGroup;
+  public tooltipText =
+    'La contraseña debe seguir los siguientes requisitos:- Una letra mayúscula- Una letra minúscula- Un símbolo';
 
+  //Flujo de vida en order
   constructor(
     private _formb: FormBuilder,
     public formService: FormService,
@@ -49,13 +67,12 @@ export class Register implements OnInit {
 
   ngOnInit(): void {
     this._titleService.title.set('Register');
-
-    // const users = this._firebaseCnUsers.getUsers();
-    // console.log('Usuarios obtenidos desde Firebase:', users);
   }
 
+  //Funciones
   onSubmit() {
-    // const formValue = this.registerForm.value;
+    if (this.registerForm.invalid) return;
+
     const { user, password, email } = this.registerForm.value;
     const userObject: PalabrinkUser = {
       name: user,
@@ -64,30 +81,14 @@ export class Register implements OnInit {
       email,
       role: UserRole.USER,
     };
-    //TODO: Introducir password hasheado
+
     this._firebaseCnUsers.register(userObject);
   }
 
-  // TODO:Pasar esto a un servicio de validación de formularios
-  //Verifica que dos contraseñas sean iguales, devuelve true si cierto
-
-  // verifySamePasswd(password: string, password_verify: string): boolean {
-  //   if (password === password_verify) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
-
-  // TODO: Debe ser igual que el del login / pasar funcionalidad a un servicio
-  // Devuelve número mayor a cero dependiendo de lo que contenga usuario
-  //¿Posible uso switch?
-  // invalid(user: string): number {
-  //   if (user.includes('@')) {
-  //     return 1;
-  //   }
-  //   if (user.length < 7) {
-  //     return 2;
-  //   }
-  //   return 0;
-  // }
+  hidePassword() {
+    this.isPasswordHidden.set(!this.isPasswordHidden());
+  }
+  hideVerify() {
+    this.isVerifyHidden.set(!this.isVerifyHidden());
+  }
 }

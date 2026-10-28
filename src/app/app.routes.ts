@@ -6,6 +6,7 @@ import { Home } from './features/books/components/home/home';
 import { authGuard } from './auth/guards/auth.guard';
 import { MissingPage } from './core/components/missing-page/missing-page';
 import { Profile } from './profile';
+import { SelectedBook } from './features/books/components/selected-book/selected-book';
 
 export const routes: Routes = [
   /* TO DO hacer que redirigir no fuerce la salida de usuarios conectados*/
@@ -14,6 +15,8 @@ export const routes: Routes = [
   { path: 'login', component: Login },
   { path: 'register', component: Register },
   { path: 'reset-password', component: ResetPassword },
+  { path: 'selected-book/:id', component: SelectedBook },
+  // "get"-> libro-idlibro
   { path: '**', component: MissingPage },
 ];
 // por rellenar, "perfil","libros","página principal"

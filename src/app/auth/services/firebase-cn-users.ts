@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import { addDoc, collection, Firestore, getDocs, getFirestore } from 'firebase/firestore/lite';
 // import { User } from '../interfaces/user.interface';
@@ -11,11 +11,19 @@ import {
   onAuthStateChanged,
   User,
   updateProfile,
+  signOut,
 } from 'firebase/auth';
 import { PalabrinkUser } from '../interfaces/user.interface';
+import { Header } from '../../core/components/header/header.component';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class FirebaseCnUsers {
+  private _popUp = inject(MatSnackBar);
+
   /*
   Para encontrar este bloque de código con los datos exactos de tu proyecto en Firebase, sigue estos pasos:
   1.Acceder a la configuración del proyecto:Entra en la consola de Firebase (console.firebase.google.com) y selecciona tu proyecto. 
@@ -29,7 +37,10 @@ export class FirebaseCnUsers {
   Si no lo has hecho, haz clic en el botón circular con el icono `` (Web) para registrar una. Ponle un nombre y guarda.
    */
 
-  // private _db: Firestore;
+  private NOTIFICATION_TIMER = 3000;
+
+  private _router = inject(Router);
+
   private _auth: Auth;
 
   public selectedUser = signal<User | null>(null);
@@ -44,20 +55,53 @@ export class FirebaseCnUsers {
   }
 
   async register({ email, password, name }: PalabrinkUser) {
-    const credential = await createUserWithEmailAndPassword(this._auth, email, password);
-    console.log({ credential });
+    try {
+      //TODO: Validar si nombre usuario existe
+      const credential = await createUserWithEmailAndPassword(this._auth, email, password);
 
-    await updateProfile(credential.user, {
-      displayName: name,
-      photoURL:
-        'https://cdn.agenciasinc.es/var/ezwebin_site/storage/images/_aliases/img_1col/en-exclusiva/programados/mi-gato-tiene-genes-de-leopardo/5668482-1-esl-MX/Mi-gato-tiene-genes-de-leopardo.jpg',
-    });
-
-    return credential.user;
+      await updateProfile(credential.user, {
+        displayName: name,
+        photoURL:
+          'https://cdn.agenciasinc.es/var/ezwebin_site/storage/images/_aliases/img_1col/en-exclusiva/programados/mi-gato-tiene-genes-de-leopardo/5668482-1-esl-MX/Mi-gato-tiene-genes-de-leopardo.jpg',
+      });
+      this._router.navigate(['/']);
+      this._popUp.open('Usuario registrado correctamente', 'Cerrar');
+      return credential.user;
+    } catch (error) {
+      this._popUp.open(
+        'Ha habido un problema, inténtelo de nuevo o contacte con el administrador',
+        'Cerrar',
+      );
+      console.error({ error });
+      return error;
+    }
   }
 
   public async login({ email, password }: PalabrinkUser) {
-    const credencial = await signInWithEmailAndPassword(this._auth, email, password);
-    return credencial.user;
+    try {
+      const credential = await signInWithEmailAndPassword(this._auth, email, password);
+
+      this._router.navigate(['/']);
+      this._popUp.open(`¡Bienvenido ${credential.user.displayName}!`, 'Cerrar', {
+        duration: this.NOTIFICATION_TIMER,
+      });
+      return credential.user;
+    } catch (error) {
+      this._popUp.open(
+        'Ha habido un problema, inténtelo de nuevo o contacte con el administrador',
+        'Cerrar',
+      );
+      console.error({ error });
+      return error;
+    }
+  }
+
+  public async logout() {
+    //TODO TRY-CATCH
+    signOut(this._auth);
+    this._router.navigate(['/login']);
+    this._popUp.open('Se ha desconectado correctamente', 'Cerrar', {
+      duration: this.NOTIFICATION_TIMER,
+    });
   }
 }
