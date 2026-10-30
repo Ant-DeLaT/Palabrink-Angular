@@ -37,7 +37,9 @@ export class FirebaseCnUsers {
   Si no lo has hecho, haz clic en el botón circular con el icono `` (Web) para registrar una. Ponle un nombre y guarda.
    */
 
-  private NOTIFICATION_TIMER = 3000;
+  private readonly NOTIFICATION_TIMER = 3000;
+  public readonly USERNAME_PATTERN = /^[a-zA-Z0-9]+$/;
+  public readonly PASSWORD_PATTERN = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).+$/;
 
   private _router = inject(Router);
 

@@ -5,8 +5,8 @@ import { ResetPassword } from './auth/components/reset-password/reset-password';
 import { Home } from './features/books/components/home/home';
 import { authGuard } from './auth/guards/auth.guard';
 import { MissingPage } from './core/components/missing-page/missing-page';
-import { Profile } from './profile';
 import { SelectedBook } from './features/books/components/selected-book/selected-book';
+import { Profile } from './auth/components/profile/profile.component';
 
 export const routes: Routes = [
   /* TO DO hacer que redirigir no fuerce la salida de usuarios conectados*/

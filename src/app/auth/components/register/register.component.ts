@@ -54,7 +54,7 @@ export class Register implements OnInit {
           [
             Validators.required,
             Validators.minLength(6),
-            Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).+$/),
+            Validators.pattern(_firebaseCnUsers.PASSWORD_PATTERN),
           ],
         ],
         password_verify: ['', [Validators.required]],

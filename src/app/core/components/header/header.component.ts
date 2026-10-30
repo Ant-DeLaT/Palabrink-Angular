@@ -5,6 +5,7 @@ import { SideBarService } from '../../services/sidebar.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { FirebaseCnUsers } from '../../../auth/services/firebase-cn-users';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +14,8 @@ import { FirebaseCnUsers } from '../../../auth/services/firebase-cn-users';
   styleUrl: './header.component.css',
 })
 export class Header {
+  private _router = inject(Router);
+
   public firebaseCnUsers = inject(FirebaseCnUsers);
   public titleService = inject(HeaderService);
   public sideBarService = inject(SideBarService);
@@ -20,4 +23,8 @@ export class Header {
   public selectedUserImage = computed(
     () => this.firebaseCnUsers.selectedUser()?.photoURL ?? 'images/IconoPerfilXS.png',
   );
+
+  goTo(route: string) {
+    this._router.navigate([route]);
+  }
 }
