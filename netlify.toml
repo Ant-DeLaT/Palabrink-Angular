@@ -2,6 +2,10 @@
   command = "npm run build:prod"
   publish = "dist/palabrink/browser"
 
+# Configuración para las funciones serverless
+[functions]
+  node_bundler = "esbuild"
+
 [build.environment]
   NODE_VERSION = "24"
   NETLIFY_SKIP_ANGULAR_RUNTIME = "true"
