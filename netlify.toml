@@ -1,0 +1,13 @@
+[build]
+  command = "npm run build:prod"
+  publish = "dist/palabrink/browser"
+
+[build.environment]
+  NODE_VERSION = "24"
+  NETLIFY_SKIP_ANGULAR_RUNTIME = "true"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false

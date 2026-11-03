@@ -6,6 +6,7 @@
     "start": "ng serve --host 0.0.0.0",
     "start:share": "ng serve --allowed-hosts palabrink",
     "build": "ng build",
+    "build:prod": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:palabrink": "node dist/palabrink/server/server.mjs"

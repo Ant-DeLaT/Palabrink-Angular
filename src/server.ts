@@ -1,4 +1,3 @@
-(globalThis as any).global=globalThis;
 import {
   AngularNodeAppEngine,
   createNodeRequestHandler,
