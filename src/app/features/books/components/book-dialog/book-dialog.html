@@ -1,8 +1,8 @@
-<div class="dialog-container">
+<div class="dialog-container" [style.backgroundImage]="'url(' + book.cover_url + ')'">
   <h2 mat-dialog-title>{{ book.title }}</h2>
   <mat-dialog-content>
-    <p>{{ book.author }}</p>
-    <p>{{ book.description }}</p>
+    <p class="author">{{ book.author }}</p>
+    <p class="description">{{ book.description }}</p>
   </mat-dialog-content>
 
   <mat-dialog-actions>

@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { initializeApp } from 'firebase/app';
-import { addDoc, collection, Firestore, getDocs, getFirestore } from 'firebase/firestore/lite';
+import { addDoc, collection, Firestore, getDocs } from 'firebase/firestore/lite';
 // import { User } from '../interfaces/user.interface';
 import { environment } from '../../../environments/environment';
 import {

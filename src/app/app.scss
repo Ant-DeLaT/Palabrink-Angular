@@ -1,0 +1,12 @@
+@use 'sass:map';
+@use '../styles/palabrink-colors' as customTheme;
+
+
+::ng-deep mat-drawer{
+  background-color: linear-gradient(
+  to bottom, 
+  map.get(customTheme.$tertiary-palette, 70) 5%,
+  var(--mat-sys-surface) 100%
+  );
+}
+

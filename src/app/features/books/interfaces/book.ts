@@ -1,7 +1,10 @@
 export interface Book {
   id: string;
-  alt_img: string;
   title: string;
-  author: string;
-  description: string;
+  isbn?: string;
+  cover_url?: string;
+  author?: string;
+  genre?: string;
+  rating?: number;
+  description?: string;
 }

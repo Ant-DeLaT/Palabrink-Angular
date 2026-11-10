@@ -1,0 +1,17 @@
+@use 'sass:map';
+@use '../../../../styles/palabrink-colors' as customTheme;
+
+.sidebar-container {
+
+  .sidebar-list {
+    list-style: none;
+    li {
+      margin: 1rem 0 1rem 0;
+
+        a {
+       color:map.get(customTheme.$primary-palette, 80);
+      //  font-family: fonts.$body-bold;
+    }
+    }
+  }
+}

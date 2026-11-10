@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   selector: 'app-header',
   imports: [MatIconModule, MatButtonModule, MatMenuModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css',
+  styleUrl: './header.component.scss',
 })
 export class Header {
   private _router = inject(Router);

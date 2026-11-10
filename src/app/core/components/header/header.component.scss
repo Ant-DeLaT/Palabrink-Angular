@@ -1,6 +1,16 @@
+@use 'sass:map';
+@use '../../../../styles/palabrink-colors' as customTheme;
+@use "../../../../styles/fonts" as fonts;
+
 header {
   width: 100vw;
-  background-color: rgb(148, 209, 88);
+  // background-color: map.get(customTheme.$tertiary-palette, 80);
+  background: linear-gradient(
+  to bottom, 
+  map.get(customTheme.$tertiary-palette, 70) 5%,
+  var(--mat-sys-surface) 100% 
+);;
+  font-family: fonts.$header;
 
   display: flex;
   flex-direction: row;
@@ -20,8 +30,8 @@ header {
 }
 
 .title {
-  /* margin: 1vh; */
   text-align: center;
+  line-height: 2;
 }
 
 .profile_btn {

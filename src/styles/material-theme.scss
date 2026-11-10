@@ -4,18 +4,20 @@
 // Learn more about theming and how to use it for your application's
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
-// @use 'colors' as customColors;
+@use 'palabrink-colors' as customTheme; 
+@use "_fonts" as fonts;
+// https://github.com/angular/components/blob/main/src/material/schematics/ng-generate/theme-color/README.md
 
 html {
   height: 100%;
   @include mat.theme(
     (
       color: (
-        primary: mat.$cyan-palette,
-        // primary: customColors.$primary-palette,
-        tertiary: mat.$orange-palette,
+        primary: customTheme.$primary-palette,
+        secondary: customTheme.$secondary-palette,
+        tertiary: customTheme.$tertiary-palette,
       ),
-      typography: Roboto,
+      typography: fonts.$body,
       density: 0,
     )
   );

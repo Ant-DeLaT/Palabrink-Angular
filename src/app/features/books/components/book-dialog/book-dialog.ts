@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
   selector: 'app-book-dialog',
   imports: [MatButtonModule, MatDialogContent, MatDialogActions, MatDialogClose],
   templateUrl: './book-dialog.html',
-  styleUrl: './book-dialog.css',
+  styleUrl: './book-dialog.scss',
 })
 export class BookDialog implements OnInit {
   readonly dialogRef = inject(MatDialogRef<BookDialog>);

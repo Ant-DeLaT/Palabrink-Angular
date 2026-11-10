@@ -11,5 +11,7 @@ export class SelectedBook implements OnInit {
 
   ngOnInit(): void {
     console.log(this.id());
+    //TODO:Obtener un libro por ID
+    // getBookById()
   }
 }

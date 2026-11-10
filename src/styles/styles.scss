@@ -1,4 +1,15 @@
-@use 'colors' as customColors;
+// @use 'colors' as customColors;
+@use '@angular/material' as mat;
+@use 'palabrink-colors' as customTheme; // Usa el nombre del archivo generado
+@use "_fonts" as fonts;
+@use 'sass:map';
+@include fonts.font-faces;
+
+html {
+  height: 100%;
+  // Aplica el tema completo de Material 3 a toda la app
+  // @include mat.all-component-themes(mat.$theme);
+}
 
 /* You can add global styles to this file, and also import other style files */
 section {
@@ -6,17 +17,50 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
-padding: 1rem;
+    padding: 1rem;
 }
 
 body {
-    // color: rgb(21, 48, 51);
-    color: customColors.$primary;
-    background-color: rgb(252,246,235);
+  color-scheme: light;
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+  // font-family: fonts.$body;
+  margin: 0;
+  height: 100%;
+
+  a {
+    font-family: "Lunasima Bold" ;
+    // font: var();
+    text-decoration: none;
+    color:map.get(customTheme.$primary-palette, 60);
+  }
+  // a:visited,
+    a:hover,
+    a:active {
+        opacity: 0.8;
+        color: map.get(customTheme.$tertiary-palette, 60);
+      }
+  mat-drawer{
+    // background color= Navegador no conoce image; funciona como "alternative"
+    background-color: var(--mat-sys-surface);
+    // background-color: black;
+    //  map.get(customTheme.$secondary-palette,40) 3%,
+    // background-image= Fondo establecido, en este caso como gradientes
+    background-image: -moz-linear-gradient(
+      var(--mat-sys-surface) 0.1%,
+      map.get(customTheme.$tertiary-palette,50) 3%,
+      map.get(customTheme.$tertiary-palette,25) 40%,
+      map.get(customTheme.$secondary-palette,25) 95%,
+      var(--mat-sys-surface) 99.9%
+    );
+  }
 }
 
+
+
 .auth-form{
-     display: flex;
+  display: flex;
   flex-direction: column;
   gap: 1.5em;
   box-shadow: 14px -8px rgba(0, 0, 0, 0.1);
@@ -24,32 +68,12 @@ body {
   border-radius: 2em;
   padding: 5em;
   width: 60%;
-  a{
-    text-decoration: none;
-  }
-}
-
-.mat-mdc-form-field-subscript-wrapper {
-  position: relative !important;
-}
-
-/*
-COLORES PALABRINK
-.colorPrimario{
-     color:  rgb(248,150,112); 
-}
-.colorSecundario{
-color:  rgb(176,207,195);
-}
-.colorFondo{
-background-color:rgb(252,246,235);
-}
-
-.colorTexto{
-color:rgb(40,94,99); "claro"
 
 
-color:rgb(21,48,51); "oscuro"
 
+
+.redBtn {
+  color: var(--mat-sys-surface) !important; 
+  background-color: var(--mat-sys-error);
 }
-*/
+}

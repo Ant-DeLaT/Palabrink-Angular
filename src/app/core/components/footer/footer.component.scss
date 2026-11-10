@@ -1,0 +1,41 @@
+@use 'sass:map';
+@use '../../../../styles/palabrink-colors' as customTheme;
+@use "../../../../styles/fonts" as fonts;
+
+footer {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    padding: 1em;
+    //Gradiente
+    // background-color:map.get(customTheme.$secondary-palette, 25);
+    // background-color:var(--mat-sys-surface);
+    background: linear-gradient(
+  to bottom, 
+  var(--mat-sys-surface) 3%, 
+  map.get(customTheme.$secondary-palette, 60) 20%,
+  map.get(customTheme.$secondary-palette, 25) 60%,
+  map.get(customTheme.$secondary-palette, 10) 100%
+);
+}
+
+.footer_elements {
+    width: 100%;
+    margin: 1em;
+    display: flex;
+    color: aliceblue;
+    justify-content: space-evenly;
+    /* Las clases internas funcionan sin scss (o quizás ya está implementado) */
+
+
+    a {
+       color:map.get(customTheme.$primary-palette, 80);
+      //  font-family: fonts.$body-bold;
+    }
+
+    // a:visited,
+    // :hover,
+    // :active {
+    //     color: rgb(176, 207, 195);
+    // }
+}

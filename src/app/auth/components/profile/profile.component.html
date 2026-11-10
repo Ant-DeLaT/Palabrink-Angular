@@ -1,46 +1,37 @@
 <section>
-    <form class="auth-form" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-        <mat-form-field>
-            <mat-label>Correo electrónico</mat-label>
-            <input matInput type="text" formControlName="email" />
-        </mat-form-field>
+  <form class="auth-form" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Correo electrónico</mat-label>
+      <input matInput type="text" formControlName="email" />
+    </mat-form-field>
 
-        <mat-form-field>
-            <mat-label>Nombre de usuario</mat-label>
-            <input matInput type="text" formControlName="userName" />
+    <mat-form-field>
+      <mat-label>Nombre de usuario</mat-label>
+      <input matInput type="text" formControlName="userName" />
 
-            @let userErrors = formService.invalid(profileForm, 'userName');
-            <mat-error>
-                @if (userErrors?.['required']) {
-                <span>Este campo no puede estar vacío.</span>
-                } @else if (userErrors?.['pattern']) {
-                <span>No se permiten símbolos en este campo.</span>
-                }
-            </mat-error>
-        </mat-form-field>
+      @let userErrors = formService.invalid(profileForm, 'userName');
+      <mat-error>
+        @if (userErrors?.['required']) {
+        <span>Este campo no puede estar vacío.</span>
+        } @else if (userErrors?.['pattern']) {
+        <span>No se permiten símbolos en este campo.</span>
+        }
+      </mat-error>
+    </mat-form-field>
 
-        <mat-form-field>
-            <mat-label>Imagen de perfil</mat-label>
-            <input matInput type="text" formControlName="profileImg" />
+    <mat-form-field>
+      <mat-label>Imagen de perfil</mat-label>
+      <input matInput type="text" formControlName="profileImg" />
 
-            @if (formService.invalid(profileForm, 'profileImg')) {
-            <mat-error> No es un correo válido</mat-error>
-            }
-        </mat-form-field>
+      @if (formService.invalid(profileForm, 'profileImg')) {
+      <mat-error> No es un correo válido</mat-error>
+      }
+    </mat-form-field>
 
-        <mat-form-field>
-            <mat-label>Contraseña</mat-label>
-            <input matInput [type]="isPasswordHidden() ? 'password' : 'text'" formControlName="password" />
-            <button mat-icon-button matSuffix type="button" [attr.aria-label]="'Hide password'"
-                [attr.aria-pressed]="isPasswordHidden()" (click)="hidePassword()">
-                <mat-icon>{{ isPasswordHidden() ? 'visibility_off' : 'visibility' }}</mat-icon>
-            </button>
-            @if (formService.invalid(profileForm, 'password')) {
-            <mat-error> La contraseña tiene menos de 6 caracteres</mat-error>
-            }
-        </mat-form-field>
-        <small><a href="reset-password">¿Has olvidado tu contraseña?</a></small>
-        <button matButton="filled" [disabled]="profileForm.invalid" type="submit">Login</button>
-        <small><a href="register" class="centered">¿No has creado una cuenta?</a></small>
-    </form>
+    <button matButton="" type="button" (click)="openChangePsswd()">Modificar contraseña</button>
+    <button matButton="filled" [disabled]="profileForm.invalid" type="submit">
+      Guardar cambios
+    </button>
+    <button matButton="" class="redBtn" type="button">Borrar cuenta</button>
+  </form>
 </section>

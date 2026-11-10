@@ -11,7 +11,7 @@ import { SideBarService } from './core/services/sidebar.service';
   selector: 'app-root',
   imports: [RouterOutlet, Header, Footer, Sidebar, MatSidenavModule],
   templateUrl: './app.html',
-  styleUrl: './app.css',
+  styleUrl: './app.scss',
 })
 export class App {
   protected readonly title = signal('Palabrink');

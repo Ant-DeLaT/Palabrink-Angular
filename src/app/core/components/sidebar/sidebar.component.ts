@@ -5,7 +5,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
   selector: 'app-sidebar',
   imports: [MatSidenavModule],
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css',
+  styleUrl: './sidebar.component.scss',
 })
 export class Sidebar {
   public headerService = inject(HeaderService);

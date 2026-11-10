@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Book } from '../../interfaces/book';
 import { BookDialog } from '../book-dialog/book-dialog';
@@ -9,21 +9,23 @@ import { BookDialog } from '../book-dialog/book-dialog';
   templateUrl: './book-card.html',
   styleUrl: './book-card.css',
 })
-export class BookCard {
+export class BookCard implements OnInit {
   private readonly _dialog = inject(MatDialog);
 
   //Default function creates signals
   public book = input.required<Book>();
+
+  ngOnInit(): void {
+    console.log(this.book());
+  }
 
   openCard() {
     //TODO: Aprovechar propiedades MatDialog: MaxWidth,MaxHeight,MinWidth,MinHeight
     const dialogRef = this._dialog.open(BookDialog, {
       //Call to value "Signal->SignalValue()"
       data: this.book(),
-      minHeight:"100vh",
-      maxHeight:"100vh",
-      minWidth:"150vh",
-      maxWidth:"150vh",
+      minHeight: '70vh',
+      minWidth: '50vw',
     });
 
     dialogRef.afterClosed().subscribe((result) => {

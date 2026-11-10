@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,6 +8,8 @@ import { HeaderService } from '../../../core/services/header.service';
 import { FormService } from '../../services/form.service';
 import { FirebaseCnUsers } from '../../services/firebase-cn-users';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ChangePasswordDialog } from '../change-password-dialog/change-password-dialog';
 
 @Component({
   selector: 'app-profile',
@@ -19,6 +21,7 @@ import { Router } from '@angular/router';
 export class Profile implements OnInit {
   public profileForm: FormGroup;
   public isPasswordHidden = signal(true);
+  private _dialog = inject(MatDialog);
 
   constructor(
     private fb: FormBuilder,
@@ -32,7 +35,7 @@ export class Profile implements OnInit {
     private _router: Router,
   ) {
     this.profileForm = this.fb.group({
-      email: [_firebaseCnUsers.selectedUser()?.email] /*Disabled,*/,
+      email: [{ value: _firebaseCnUsers.selectedUser()?.email, disabled: true }],
       userName: [
         _firebaseCnUsers.selectedUser()?.displayName,
         [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)],
@@ -53,5 +56,24 @@ export class Profile implements OnInit {
   }
   hidePassword() {
     this.isPasswordHidden.set(!this.isPasswordHidden());
+  }
+
+  openChangePsswd() {
+    //TODO: Aprovechar propiedades MatDialog: MaxWidth,MaxHeight,MinWidth,MinHeight
+    const dialogRef = this._dialog.open(ChangePasswordDialog, {
+      //Call to value "Signal->SignalValue()"
+      // data: this.book(),
+      minHeight: '50vh',
+      maxHeight: '100vh',
+      minWidth: '50vw',
+      maxWidth: '100vw',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+      // if (result !== undefined) {
+      //   this.animal.set(result);
+      // }
+    });
   }
 }
