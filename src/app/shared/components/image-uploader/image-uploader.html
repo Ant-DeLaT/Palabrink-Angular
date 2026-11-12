@@ -1,0 +1,29 @@
+<div class="upload-container">
+  <div
+    class="drop-zone"
+    appDragDrop
+    /* (droppedFile)="onFileDropped($event)" (dragging)="isHovering.set($event)" */
+    [class.hovering]="isHovering()"
+    (click)="fileInput.click()"
+  >
+    @if (isUploading()) {
+      <mat-spinner diameter="48"></mat-spinner>
+      <p>Subiendo imagen...</p>
+    } @else if (uploadedUrl()) {
+      <img [src]="uploadedUrl()" alt="Imagen subida" class="preview-img" />
+    } @else {
+      <mat-icon class="upload-icon">cloud_upload</mat-icon>
+      <h3>Arrastra tu imagen aquí</h3>
+      <p>o haz clic para explorar</p>
+    }
+
+    <!-- Input nativo oculto sincronizado con la zona de drop -->
+    <input
+      type="file"
+      #fileInput
+      hidden
+      accept="image/png, image/jpeg, image/webp"
+      (change)="onFileSelected($event)"
+    />
+  </div>
+</div>

@@ -1,7 +1,7 @@
-<section class="row justify-content-start">
+<section class="row justify-content-start m-0">
   @for (book of books(); track book.id) {
-    <app-book-card class="col-12 col-md-4 col-xl-3" [book]="book"> </app-book-card>
+  <app-book-card class="col-12 col-md-4 col-xl-3" [book]="book"> </app-book-card>
   } @empty {
-    <p>No hay libros registrados</p>
+  <p>No hay libros registrados</p>
   }
 </section>

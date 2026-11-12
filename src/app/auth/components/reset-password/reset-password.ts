@@ -21,4 +21,4 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   templateUrl: './reset-password.html',
   styleUrl: './reset-password.css',
 })
-export class ResetPassword {}
+export class ResetPassword { }

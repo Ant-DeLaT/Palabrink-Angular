@@ -41,9 +41,17 @@ export class Profile implements OnInit {
         [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)],
       ],
       profileImg: [_firebaseCnUsers.selectedUser()?.photoURL, [Validators.required]],
-      password: [''],
+      password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(6),
+            Validators.pattern(_firebaseCnUsers.PASSWORD_PATTERN),
+          ],
+        ]
+      },
       // TODO: ADD VALIDATORS
-    });
+    );
   }
 
   ngOnInit(): void {

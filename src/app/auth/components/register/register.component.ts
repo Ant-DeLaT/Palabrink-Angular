@@ -35,7 +35,7 @@ export class Register implements OnInit {
   public isVerifyHidden = signal(true);
   public registerForm: FormGroup;
   public tooltipText =
-    'La contraseña debe seguir los siguientes requisitos:- Una letra mayúscula- Una letra minúscula- Un símbolo';
+    'La contraseña debe seguir los siguientes requisitos:\n\n- Una letra mayúscula\n- Una letra minúscula\n- Un símbolo';
 
   //Flujo de vida en order
   constructor(

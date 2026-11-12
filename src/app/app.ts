@@ -14,7 +14,7 @@ import { SideBarService } from './core/services/sidebar.service';
   styleUrl: './app.scss',
 })
 export class App {
-  protected readonly title = signal('Palabrink');
+  // protected readonly title = signal('test');
   public sideBarService = inject(SideBarService);
   public headerService = inject(HeaderService);
 }

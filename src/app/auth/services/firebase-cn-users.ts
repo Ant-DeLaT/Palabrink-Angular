@@ -51,9 +51,7 @@ export class FirebaseCnUsers {
     const app = initializeApp(environment.firebase);
     this._auth = getAuth(app);
 
-    onAuthStateChanged(this._auth, (user) => {
-      this.selectedUser.set(user);
-    });
+    onAuthStateChanged(this._auth, (user) => this.selectedUser.set(user));
   }
 
   async register({ email, password, name }: PalabrinkUser) {
@@ -82,7 +80,6 @@ export class FirebaseCnUsers {
   public async login({ email, password }: PalabrinkUser) {
     try {
       const credential = await signInWithEmailAndPassword(this._auth, email, password);
-
       this._router.navigate(['/']);
       this._popUp.open(`¡Bienvenido ${credential.user.displayName}!`, 'Cerrar', {
         duration: this.NOTIFICATION_TIMER,
@@ -99,11 +96,17 @@ export class FirebaseCnUsers {
   }
 
   public async logout() {
-    //TODO TRY-CATCH
-    signOut(this._auth);
-    this._router.navigate(['/login']);
-    this._popUp.open('Se ha desconectado correctamente', 'Cerrar', {
-      duration: this.NOTIFICATION_TIMER,
-    });
+    signOut(this._auth)
+      .then(() => {
+        this._router.navigateByUrl('/login');
+        this._popUp.open('Se ha desconectado correctamente', 'Cerrar', {
+          duration: this.NOTIFICATION_TIMER,
+        });
+      })
+      .catch((error) => {
+        this._popUp.open('Ha ocurrido un error', 'Cerrar');
+        console.log(error);
+        this._router.navigate(['/login']);
+      });
   }
 }

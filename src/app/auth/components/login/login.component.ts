@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -32,11 +32,14 @@ export class Login implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
+
+    effect(() => {
+      if (this._firebaseCnUsers.selectedUser()) this._router.navigate(['/']);
+    });
   }
+
   ngOnInit(): void {
     this._headerService.title.set('Login');
-
-    if (this._firebaseCnUsers.selectedUser()) this._router.navigate(['/']);
   }
 
   onSubmit() {

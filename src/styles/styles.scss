@@ -11,6 +11,14 @@ html {
   // @include mat.all-component-themes(mat.$theme);
 }
 
+.tooltip-multilinea {
+  white-space: pre-line;
+  font-size: 13px; /* Opcional: ajustar un poco el tamaño */
+  line-height: 1.5; /* Opcional: darle un poco de aire entre las líneas */
+}
+
+
+
 /* You can add global styles to this file, and also import other style files */
 section {
     height: 100%;
