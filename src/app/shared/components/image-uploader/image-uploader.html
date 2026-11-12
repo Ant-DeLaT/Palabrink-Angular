@@ -1,11 +1,6 @@
 <div class="upload-container">
-  <div
-    class="drop-zone"
-    appDragDrop
-    /* (droppedFile)="onFileDropped($event)" (dragging)="isHovering.set($event)" */
-    [class.hovering]="isHovering()"
-    (click)="fileInput.click()"
-  >
+  <!-- (droppedFile)="onFileDropped($event)" (dragging)="isHovering.set($event)" -->
+  <div class="drop-zone" appDragDrop [class.hovering]="isHovering()" (click)="fileInput.click()">
     @if (isUploading()) {
       <mat-spinner diameter="48"></mat-spinner>
       <p>Subiendo imagen...</p>
