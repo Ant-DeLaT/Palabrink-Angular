@@ -1,0 +1,60 @@
+@use '../../../../../styles/_fonts' as fonts;
+@use '../../../../../styles/palabrink-colors' as customTheme;
+@use 'sass:map';
+
+.dialog-container {
+  width: 100%;
+  height: 100%;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 250%;
+  padding: 1rem;
+  overflow: hidden;
+  border-radius: 0.7rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+        var(--mat-sys-surface) 1%,
+        map.get(customTheme.$primary-palette, 20) 5%,
+        map.get(customTheme.$primary-palette, 20) 95%,
+        var(--mat-sys-surface) 100%);
+    opacity: 0.72;
+    z-index: 1;
+  }
+
+  >* {
+    position: relative;
+    z-index: 3;
+  }
+
+  h2 {
+    color: map.get(customTheme.$tertiary-palette, 90);
+    font-family: fonts.$header;
+    text-align: start;
+    margin-top: 1rem;
+  }
+
+  img {
+    display: flexbox;
+    align-content: center;
+    justify-self: center;
+    position: relative;
+    border-radius: 0.7rem;
+  }
+
+  .subtitle {
+    color: map.get(customTheme.$secondary-palette, 70);
+    font-style: italic;
+    font-size: 1.15rem;
+  }
+
+  .description {
+    color: map.get(customTheme.$tertiary-palette, 95);
+    text-align: justify;
+  }
+}

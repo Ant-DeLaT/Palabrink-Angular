@@ -23,6 +23,9 @@ export class Header {
   public selectedUserImage = computed(
     () => this.firebaseCnUsers.selectedUser()?.photoURL ?? 'images/IconoPerfilXS.png',
   );
+  public selectedUserName = computed(
+    () => this.firebaseCnUsers.selectedUser()?.displayName ?? 'No estás conectado',
+  );
 
   goTo(route: string) {
     this._router.navigate([route]);

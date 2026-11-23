@@ -1,7 +1,7 @@
 // @use 'colors' as customColors;
 @use '@angular/material' as mat;
 @use 'palabrink-colors' as customTheme; // Usa el nombre del archivo generado
-@use "_fonts" as fonts;
+@use '_fonts' as fonts;
 @use 'sass:map';
 @include fonts.font-faces;
 
@@ -13,19 +13,20 @@ html {
 
 .tooltip-multilinea {
   white-space: pre-line;
-  font-size: 13px; /* Opcional: ajustar un poco el tamaño */
-  line-height: 1.5; /* Opcional: darle un poco de aire entre las líneas */
+  font-size: 13px;
+  /* Opcional: ajustar un poco el tamaño */
+  line-height: 1.5;
+  /* Opcional: darle un poco de aire entre las líneas */
 }
-
-
 
 /* You can add global styles to this file, and also import other style files */
 section {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  overflow-y: hidden;
 }
 
 body {
@@ -38,36 +39,43 @@ body {
   height: 100%;
 
   a {
-    font-family: "Lunasima Bold" ;
+    font-family: 'Lunasima Bold';
     // font: var();
     text-decoration: none;
-    color:map.get(customTheme.$primary-palette, 60);
+    color: map.get(customTheme.$primary-palette, 60);
   }
+
   // a:visited,
-    a:hover,
-    a:active {
-        opacity: 0.8;
-        color: map.get(customTheme.$tertiary-palette, 60);
-      }
-  mat-drawer{
+  a:hover,
+  a:active {
+    opacity: 0.8;
+    color: map.get(customTheme.$tertiary-palette, 60);
+  }
+
+  //#region Overrides
+  mat-drawer {
     // background color= Navegador no conoce image; funciona como "alternative"
     background-color: var(--mat-sys-surface);
     // background-color: black;
     //  map.get(customTheme.$secondary-palette,40) 3%,
     // background-image= Fondo establecido, en este caso como gradientes
-    background-image: -moz-linear-gradient(
-      var(--mat-sys-surface) 0.1%,
-      map.get(customTheme.$tertiary-palette,50) 3%,
-      map.get(customTheme.$tertiary-palette,25) 40%,
-      map.get(customTheme.$secondary-palette,25) 95%,
-      var(--mat-sys-surface) 99.9%
-    );
+    background-image: -moz-linear-gradient(var(--mat-sys-surface) 0.1%,
+        map.get(customTheme.$tertiary-palette, 50) 3%,
+        map.get(customTheme.$tertiary-palette, 25) 40%,
+        map.get(customTheme.$secondary-palette, 25) 95%,
+        var(--mat-sys-surface) 99.9%);
+  }
+
+  .snackbar-error {
+    @include mat.snack-bar-overrides((container-color: var(--mat-sys-error),
+        supporting-text-color: var(--mat-sys-on-error),
+        button-color: var(--mat-sys-on-error),
+      ));
+    //#endregion
   }
 }
 
-
-
-.auth-form{
+.auth-form {
   display: flex;
   flex-direction: column;
   gap: 1.5em;
@@ -76,12 +84,10 @@ body {
   border-radius: 2em;
   padding: 5em;
   width: 60%;
+  max-height: 100%;
 
-
-
-
-.redBtn {
-  color: var(--mat-sys-surface) !important; 
-  background-color: var(--mat-sys-error);
-}
+  .redBtn {
+    color: var(--mat-sys-surface) !important;
+    background-color: var(--mat-sys-error);
+  }
 }

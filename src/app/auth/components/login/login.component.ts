@@ -46,6 +46,7 @@ export class Login implements OnInit {
     const user: PalabrinkUser = this.loginForm.value;
     this._firebaseCnUsers.login(user);
   }
+  //TODO
   hidePassword() {
     this.isPasswordHidden.set(!this.isPasswordHidden());
   }

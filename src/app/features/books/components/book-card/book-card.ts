@@ -24,8 +24,10 @@ export class BookCard implements OnInit {
     const dialogRef = this._dialog.open(BookDialog, {
       //Call to value "Signal->SignalValue()"
       data: this.book(),
-      minHeight: '70vh',
-      minWidth: '50vw',
+      // SI LA PROPORCIÓN SUPERA EL 65/50, GENERA "PANZA"
+      // Dejado en automático, parece que funciona
+      // minHeight: '65vh',
+      // maxHeight:'200vh'
     });
 
     dialogRef.afterClosed().subscribe((result) => {
