@@ -41,7 +41,7 @@ export class Register implements OnInit {
   constructor(
     private _formb: FormBuilder,
     public formService: FormService,
-    private _titleService: HeaderService,
+    private _headerService: HeaderService,
     private _firebaseCnUsers: FirebaseCnUsers,
   ) {
     this.registerForm = this._formb.group(
@@ -66,7 +66,7 @@ export class Register implements OnInit {
   }
 
   ngOnInit(): void {
-    this._titleService.title.set('Register');
+    this._headerService.title.set('Register');
   }
 
   //Funciones

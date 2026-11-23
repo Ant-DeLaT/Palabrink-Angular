@@ -5,6 +5,8 @@ import { MatAnchor } from '@angular/material/button';
   selector: 'app-missing-page',
   imports: [MatAnchor],
   templateUrl: './missing-page.html',
-  styleUrl: './missing-page.css',
+  styleUrl: './missing-page.scss',
 })
-export class MissingPage {}
+export class MissingPage {
+  
+}

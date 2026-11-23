@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Register } from '../components/register/register.component';
 import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 @Injectable()

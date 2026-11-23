@@ -9,12 +9,21 @@ import { FormService } from '../../services/form.service';
 import { FirebaseCnUsers } from '../../services/firebase-cn-users';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ChangePasswordDialog } from '../change-password-dialog/change-password-dialog';
+import { ConfirmPasswordDialog } from '../confirm-password-dialog/confirm-password-dialog';
+import { ImageUploader } from '../../../shared/components/image-uploader/image-uploader';
+import { PalabrinkUser } from '../../interfaces/user.interface';
 
 @Component({
   selector: 'app-profile',
   providers: [FormService],
-  imports: [MatInputModule, MatButtonModule, ReactiveFormsModule, CommonModule, MatIconModule],
+  imports: [
+    MatInputModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    CommonModule,
+    MatIconModule,
+    ImageUploader,
+  ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
 })
@@ -24,7 +33,7 @@ export class Profile implements OnInit {
   private _dialog = inject(MatDialog);
 
   constructor(
-    private fb: FormBuilder,
+    private _fb: FormBuilder,
 
     private _headerService: HeaderService,
 
@@ -34,21 +43,14 @@ export class Profile implements OnInit {
 
     private _router: Router,
   ) {
-    this.profileForm = this.fb.group({
-      email: [{ value: _firebaseCnUsers.selectedUser()?.email, disabled: true }],
-      userName: [
-        _firebaseCnUsers.selectedUser()?.displayName,
-        [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)],
-      ],
-      profileImg: [_firebaseCnUsers.selectedUser()?.photoURL, [Validators.required]],
-      password: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(6),
-            Validators.pattern(_firebaseCnUsers.PASSWORD_PATTERN),
-          ],
-        ]
+    this.profileForm = this._fb.group(
+      {
+        email: [{ value: _firebaseCnUsers.selectedUser()?.email, disabled: true }],
+        name: [
+          _firebaseCnUsers.selectedUser()?.displayName,
+          [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)],
+        ],
+        profileImgUrl: [_firebaseCnUsers.selectedUser()?.photoURL, Validators.required],
       },
       // TODO: ADD VALIDATORS
     );
@@ -59,22 +61,27 @@ export class Profile implements OnInit {
   }
 
   onSubmit(): void {
-    // const user: PalabrinkUser = this.profileForm.value;
-    // this._firebaseCnUsers.login(user);
+    if (this.profileForm.invalid) return;
+
+    const { name, profileImgUrl } = this.profileForm.value;
+    const userObject: PalabrinkUser = {
+      name,
+      profileImgUrl,
+    };
+
+    this._firebaseCnUsers.updateProfile(userObject);
   }
+
   hidePassword() {
     this.isPasswordHidden.set(!this.isPasswordHidden());
   }
 
   openChangePsswd() {
-    //TODO: Aprovechar propiedades MatDialog: MaxWidth,MaxHeight,MinWidth,MinHeight
-    const dialogRef = this._dialog.open(ChangePasswordDialog, {
-      //Call to value "Signal->SignalValue()"
-      // data: this.book(),
-      minHeight: '50vh',
-      maxHeight: '100vh',
-      minWidth: '50vw',
-      maxWidth: '100vw',
+    const dialogRef = this._dialog.open(ConfirmPasswordDialog, {
+      minHeight: '20rem',
+      minWidth: '25rem',
+      maxHeight: '100rem',
+      maxWidth: '125rem',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -83,5 +90,8 @@ export class Profile implements OnInit {
       //   this.animal.set(result);
       // }
     });
+  }
+  getImageUrl(url: string) {
+    this.profileForm.patchValue({ profileImgUrl: url });
   }
 }

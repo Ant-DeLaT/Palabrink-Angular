@@ -1,7 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import { addDoc, collection, Firestore, getDocs } from 'firebase/firestore/lite';
-// import { User } from '../interfaces/user.interface';
 import { environment } from '../../../environments/environment';
 import {
   getAuth,
@@ -12,9 +11,13 @@ import {
   User,
   updateProfile,
   signOut,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  updatePassword,
+  confirmPasswordReset,
+  sendPasswordResetEmail,
 } from 'firebase/auth';
 import { PalabrinkUser } from '../interfaces/user.interface';
-import { Header } from '../../core/components/header/header.component';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -23,6 +26,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class FirebaseCnUsers {
   private _popUp = inject(MatSnackBar);
+  private _router = inject(Router);
 
   /*
   Para encontrar este bloque de código con los datos exactos de tu proyecto en Firebase, sigue estos pasos:
@@ -41,11 +45,10 @@ export class FirebaseCnUsers {
   public readonly USERNAME_PATTERN = /^[a-zA-Z0-9]+$/;
   public readonly PASSWORD_PATTERN = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).+$/;
 
-  private _router = inject(Router);
-
   private _auth: Auth;
 
   public selectedUser = signal<User | null>(null);
+  public canChangePassword = signal(false);
 
   constructor() {
     const app = initializeApp(environment.firebase);
@@ -57,7 +60,7 @@ export class FirebaseCnUsers {
   async register({ email, password, name }: PalabrinkUser) {
     try {
       //TODO: Validar si nombre usuario existe
-      const credential = await createUserWithEmailAndPassword(this._auth, email, password);
+      const credential = await createUserWithEmailAndPassword(this._auth, email!, password!);
 
       await updateProfile(credential.user, {
         displayName: name,
@@ -77,9 +80,25 @@ export class FirebaseCnUsers {
     }
   }
 
-  public async login({ email, password }: PalabrinkUser) {
+  async updateProfile({ name, profileImgUrl }: PalabrinkUser) {
     try {
-      const credential = await signInWithEmailAndPassword(this._auth, email, password);
+      await updateProfile(this.selectedUser()!, {
+        displayName: name,
+        photoURL: profileImgUrl,
+      });
+      this._popUp.open('Cambios realizados correctamente', 'Cerrar');
+    } catch (error) {
+      this._popUp.open(
+        'Ha habido un problema, inténtelo de nuevo o contacte con el administrador',
+        'Cerrar',
+      );
+      console.error({ error });
+    }
+  }
+
+  public async login({ email, password }: PalabrinkUser): Promise<User | any> {
+    try {
+      const credential = await signInWithEmailAndPassword(this._auth, email!, password!);
       this._router.navigate(['/']);
       this._popUp.open(`¡Bienvenido ${credential.user.displayName}!`, 'Cerrar', {
         duration: this.NOTIFICATION_TIMER,
@@ -95,7 +114,7 @@ export class FirebaseCnUsers {
     }
   }
 
-  public async logout() {
+  public async logout(): Promise<void> {
     signOut(this._auth)
       .then(() => {
         this._router.navigateByUrl('/login');
@@ -108,5 +127,41 @@ export class FirebaseCnUsers {
         console.log(error);
         this._router.navigate(['/login']);
       });
+  }
+
+  public async reauthenticate(currentPassword: string): Promise<void> {
+    const user = this.selectedUser();
+    if (!user || !user.email) {
+      throw new Error('No hay ningún usuario autenticado.');
+    }
+
+    const credential = EmailAuthProvider.credential(user.email, currentPassword);
+    // Lanza excepción si la contraseña actual es incorrecta
+    await reauthenticateWithCredential(user, credential);
+    this.canChangePassword.set(true);
+  }
+
+  async changeUserPassword(newPassword: string, oobCode?: string): Promise<void> {
+    // oob-> Out Of Bounds
+    if (oobCode) {
+      await confirmPasswordReset(this._auth, oobCode, newPassword);
+      return;
+    }
+
+    const user = this.selectedUser();
+    if (!user) {
+      throw new Error('No hay ningún usuario autenticado.');
+    }
+
+    await updatePassword(user, newPassword);
+    this.canChangePassword.set(false);
+  }
+
+  async sendRecoveryEmail(email: string): Promise<void> {
+    console.log(window.location.origin);
+
+    await sendPasswordResetEmail(this._auth, email.trim(), {
+      url: `${window.location.origin}/change-password`,
+    });
   }
 }

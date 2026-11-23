@@ -12,14 +12,12 @@ export const authGuard: CanActivateFn = () => {
   return new Promise((resolve) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       unsubscribe(); // Se detiene la escucha tras la primera respuesta
-      user ? resolve(true) : resolve(router.parseUrl('/login'));
+      user ? resolve(true):resolve(router.parseUrl('/login'));
     });
   });
 };
 /*
 POSIBLES CAUSAS DEL LOOP DE LOGIN
-
-1.
 
 RECOMENDADO POR LA IA
 import { inject } from '@angular/core';

@@ -1,14 +1,18 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, output, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Cloudinary } from '../../services/cloudinary';
 @Component({
   selector: 'app-image-uploader',
   imports: [MatProgressSpinnerModule, MatIconModule],
   templateUrl: './image-uploader.html',
   styleUrl: './image-uploader.css',
+  providers: [Cloudinary],
 })
 export class ImageUploader {
-  // private _cloudinary = inject(CloudinaryService);
+  private _cloudinary = inject(Cloudinary);
+
+  public urlEmitter = output<string>();
 
   isHovering = signal(false);
   isUploading = signal(false);
@@ -31,12 +35,11 @@ export class ImageUploader {
       this.isUploading.set(true);
 
       // Llamada al servicio de Cloudinary (configurado previamente)
-      // const url = await this._cloudinary.uploadImage(file);
+      const url = await this._cloudinary.uploadImage(file);
 
-      // this.uploadedUrl.set(url);
+      this.uploadedUrl.set(url);
 
-      //TODO: Aquí puedes emitir la URL al componente padre o guardarla en Firebase
-      // console.log('Imagen subida con éxito:', url);
+      this.urlEmitter.emit(url);
     } catch (error) {
       console.error('Error al subir a Cloudinary', error);
     } finally {

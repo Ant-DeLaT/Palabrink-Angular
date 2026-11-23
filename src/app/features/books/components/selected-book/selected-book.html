@@ -1,3 +1,23 @@
 <section>
-    
+  @if (book(); as selectedBook) {
+  <div class="dialog-container">
+    <div class="row mb-4">
+      <div class="col-8">
+        <h2>{{ selectedBook.title }}</h2>
+        <p class="subtitle">{{ selectedBook.author }}</p>
+        <p class="subtitle">{{ selectedBook.genre }}</p>
+        <p class="subtitle">Puntuación general: {{ selectedBook.rating }}/5</p>
+        <!-- TODO: Botón "añadir a mi biblioteca" ??? -->
+        <!-- <p class="subtitle">Tu puntuación: {{ selectedBook.rating }}/5</p> -->
+        <p class="description">{{ selectedBook.description }}</p>
+      </div>
+      <div class="col">
+        <img [src]="selectedBook.cover_url" alt="Imagen Libro" />
+      </div>
+    </div>
+    <!-- TODO: Aquí van los comentarios de los usuarios -->
+  </div>
+  } @else {
+  <p>No se ha podido cargar el libro.</p>
+  }
 </section>

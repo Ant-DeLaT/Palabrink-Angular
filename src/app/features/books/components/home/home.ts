@@ -3,6 +3,7 @@ import { BookCard } from '../book-card/book-card';
 import { Book } from '../../interfaces/book';
 import { FirebaseCnBooks } from '../../services/firebase-cn-books';
 import { HeaderService } from '../../../../core/services/header.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -25,7 +26,10 @@ export class Home implements OnInit {
       .getBooks()
       .then((books: Book[]) => {
         this.books.set(books);
+        
       })
-      .catch((error: Error) => {});
+      .catch((error: Error) => {
+
+      });
   }
 }
